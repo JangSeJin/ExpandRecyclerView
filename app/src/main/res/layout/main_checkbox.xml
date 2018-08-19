@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.hour24.expandrecyclerview.ModelItem" />
+
+        <variable
+            name="handler"
+            type="com.hour24.expandrecyclerview.RecyclerViewAdapter.ItemAdapter.BindingHandler" />
+
+        <variable
+            name="position"
+            type="int" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> handler.onClick(v, model, position)}"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{model.isChecked}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}" />
+
+    </LinearLayout>
+</layout>

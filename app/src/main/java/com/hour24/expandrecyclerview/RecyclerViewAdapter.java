@@ -17,7 +17,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // Variables
     private Context mContext;
-    private MainActivity mActivity;
     private ArrayList<ModelItem> mList;
 
     public RecyclerViewAdapter(Context context, ArrayList<ModelItem> list) {
@@ -42,7 +41,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         try {
             ModelItem item = mList.get(position);
             holder.getBinding().setVariable(BR.model, item);
-//            holder.getBinding().setVariable(BR.handler, new BindingHandler());
+            holder.getBinding().setVariable(BR.handler, new BindingHandler());
+            holder.getBinding().setVariable(BR.position, position);
             holder.getBinding().executePendingBindings();
 
         } catch (Exception e) {
@@ -63,26 +63,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return binding;
         }
     }
-//
-//    // Handlers
-//    public class BindingHandler {
-//
-//        // xml 에 정의
-//        public void onClick(final View view, ModelItem timeline) {
-//            try {
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+
+    // Handlers
+    public class BindingHandler {
+
+        // xml 에 정의
+        public void onClick(final View view, ModelItem model, int position) {
+            try {
+                switch (view.getId()) {
+                    case R.id.more:
+                        model.setExpand(!model.isExpand());
+                        notifyItemChanged(position);
+                        break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @BindingAdapter({"item_recyclerview"})
     public static void setRecyclerView(RecyclerView view, ModelItem model) {
         view.setAdapter(new ItemAdapter(view.getContext(), model.getItems()));
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
-
 
     // RecyclerViewAdapter
     public static class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {

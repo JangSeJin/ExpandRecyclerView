@@ -8,6 +8,14 @@
             name="model"
             type="com.hour24.expandrecyclerview.ModelItem" />
 
+        <variable
+            name="handler"
+            type="com.hour24.expandrecyclerview.RecyclerViewAdapter.BindingHandler" />
+
+        <variable
+            name="position"
+            type="int" />
+
     </data>
 
     <LinearLayout
@@ -22,14 +30,16 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/items"
-            bind:item_recyclerview="@{model}"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:minHeight="100dp" />
+            bind:item_recyclerview="@{model}"
+            bind:view_height="@{model.isExpand}" />
 
         <Button
+            android:id="@+id/more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{(v) -> handler.onClick(v, model, position)}"
             android:text='@{model.isExpand ? "COLLPASE" : "EXPAND"}' />
     </LinearLayout>
 </layout>
